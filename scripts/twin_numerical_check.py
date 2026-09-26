@@ -63,7 +63,7 @@ for i,ax in enumerate(axes):
     ax.set_title(f'Virtual subject {i+1}',loc='left',fontweight='bold')
     ax.set_xlabel('Hours'); ax.grid(alpha=.14)
 axes[0].set_ylabel('Glucose (mg/dL)'); axes[1].legend(frameon=False,fontsize=8)
-fig.suptitle('Do the two implementations follow the same synthetic inputs?',fontsize=13,fontweight='bold')
+fig.suptitle('Numerical agreement under matched synthetic inputs',fontsize=13,fontweight='bold')
 fig.savefig(ROOT/'assets/twin-numerical-check.png',dpi=180)
 plt.close(fig)
 print(json.dumps(result))

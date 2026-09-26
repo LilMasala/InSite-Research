@@ -4,16 +4,28 @@
 
 I built InSite to bring glucose, insulin, sleep, activity, cycle history, and daily logs into one place. The research focuses on two questions: which combinations of recorded context accompany recurring glucose outcomes, and how well can a personal physiological model reproduce those responses?
 
-The iOS app is in a small TestFlight pilot. Pattern cards are being evaluated using synthetic histories and remain disabled for participants. This repository contains the research implementation, reproducible synthetic examples, and app screenshots.
+The iOS app is in a small TestFlight pilot. Pattern cards are being evaluated using synthetic histories and remain disabled for participants. This repository contains the research implementation, reproducible examples, evaluation methods, and app screenshots.
+
+My longer-term goal is personalized automated insulin delivery (AID): learn a state that preserves the consequences of insulin decisions, then use it to plan across their delayed effects. The app, pattern engine, and physiological twin provide the data, interpretable observations, and simulation tools for that research.
+
+## The app
+
+Home brings together mood logging, infusion-site tracking, therapy profiles, and sync status. Community includes a message board and a daily mini crossword with community-submitted clues. My Data organizes recorded streams into summaries and browsable charts.
+
+| Home | Community | My Data |
+| --- | --- | --- |
+| <img src="assets/app-home-synthetic.png" width="250" alt="InSite Home with mood, site, therapy, and sync controls"> | <img src="assets/app-community-synthetic.png" width="250" alt="InSite Community hub"> | <img src="assets/app-data-synthetic.png" width="250" alt="InSite My Data with synthetic health charts"> |
+
+Simulator captures use local synthetic fixtures. [Screenshot provenance](docs/app-and-privacy.md).
 
 ## Explore the project
 
 | Component | What you can inspect or run |
 | --- | --- |
-| **iOS app** | Screenshots of an engine-generated observation, its supporting days, and individual glucose traces |
+| **iOS app** | Home, community, health-data views, and observations with linked supporting days |
 | **Pattern engine** | Time-aligned features, subgroup search, similar-context retrieval, and evidence checks; quick and full synthetic runs |
 | **Digital twin** | Physiological and context parameters, fitting, held-out replay, and an interactive simulation |
-| **Evaluation** | Numerical agreement with simglucose, synthetic data-contract tests, and a reproducible calibration example |
+| **Evaluation** | Held-out comparisons with T1DSim_AI and ReplayBG, numerical agreement with simglucose, and synthetic calibration |
 
 ## Digital twin
 
@@ -29,6 +41,18 @@ The model represents:
 - **Variation in the records:** meal quantity and timing uncertainty, daily drift, response corrections, and residual disturbance.
 
 [Model capabilities and assumptions](docs/twin-capabilities.md) · [Fitting and evaluation](docs/digital-twin.md) · [Source](twin/t1d_twin/model.py)
+
+### Comparison with other digital twins
+
+The existing benchmark compares the fitted twin with **T1DSim_AI** on HUPA-UCM and T1D-UOM, and with **ReplayBG** on HUPA-UCM. Both comparisons use held-out five-hour windows with recorded meals and insulin supplied during replay.
+
+![Digital-twin benchmark results](assets/twin-benchmark.png)
+
+Glucose replay errors were comparable to the personalized baselines. The stronger result was **low-event discrimination on HUPA-UCM**: AUROC **0.739** for the twin, **0.597** for tuned T1DSim_AI with matched CGM noise, and **0.674** for ReplayBG with matched CGM noise. This comparison included 17 people, 217 windows, and 50 low events.
+
+The paired AUROC advantage was **+0.142 [0.058, 0.222]** over T1DSim_AI and **+0.065 [0.016, 0.126]** over ReplayBG, using 95% participant-cluster bootstrap intervals. The twin uses a six-hour warm-up history; the comparators have different initialization procedures. These exploratory results evaluate recorded-input replay. The small UOM cohort had only seven low events.
+
+[Evaluation protocol and full results](docs/twin-benchmark.md) · [Aggregate results and source hashes](examples/twin-benchmark-summary.json) · [Recreate the figure](scripts/plot_twin_benchmark.py)
 
 ### Interactive simulation
 
@@ -67,6 +91,8 @@ The pattern engine constructs event-aligned and daily rows from timestamped obse
 
 Candidate findings pass chronological, coverage, support, matching, and uncertainty checks. Each released observation retains its supporting episodes. A local language model words the structured finding, and a validation step checks the claims and links against the evidence.
 
+For example, a row anchored to a logged meal can describe the previous night's sleep, recent activity, cycle records, site age and location, glucose before the meal, and recorded carbohydrates and insulin. Its targets describe what followed: early and later glucose responses, variability, or sustained low and high episodes. The search can combine those features to identify a recurring context, then retrieve the actual days behind it.
+
 ```mermaid
 flowchart LR
     A[Timestamped records] --> B[Time-aligned features]
@@ -88,7 +114,7 @@ python -m pytest tests -q
 
 The quick command exercises the pipeline on a short artificial history. `python scripts/run_demo.py full` runs the longer 120-day synthetic scenarios. The saved example includes accepted wording from an earlier offline model run; the CLI produces engine findings.
 
-## App screenshots
+## From an observation to its evidence
 
 These captures use synthetic data in the actual iOS app. Tapping an observation opens its evidence, including the glucose curves and recorded events for individual days.
 
@@ -97,6 +123,14 @@ These captures use synthetic data in the actual iOS app. Tapping an observation 
 | <img src="assets/app-brief-synthetic.png" width="250" alt="Synthetic InSite observation"> | <img src="assets/app-evidence-synthetic.png" width="250" alt="Supporting synthetic glucose traces"> | <img src="assets/app-day-synthetic.png" width="250" alt="Individual synthetic episode"> |
 
 [App and data handling](docs/app-and-privacy.md)
+
+## Research direction: automated insulin delivery
+
+The next research step is an action-conditioned latent world model. It would encode recent observations and longer-term context, simulate the consequences of candidate insulin courses, and score separate low- and high-glucose costs. The actor and planner would use those consequences to choose actions, with memory carrying earlier doses and their continuing effects.
+
+The physiological twin provides a way to study controlled interventions and variation between virtual people. The pattern engine provides interpretable observations and evidence that can help examine learned representations. Closed-loop evaluation will compare time in range, hypoglycemia, variability, and failures under matched simulator scenarios and interaction budgets.
+
+[Architecture, evaluation plan, and current scope](docs/research-direction.md)
 
 ## Repository contents
 
@@ -108,4 +142,4 @@ These captures use synthetic data in the actual iOS app. Tapping an observation 
 
 [Reproducibility](docs/reproducibility.md) · [Source and licensing](NOTICE.md) · [Publication contents](PUBLICATION_CONTENTS.md)
 
-All included records and screenshots are synthetic. Source manifests record the copied implementation files and their hashes. The verification record distinguishes executed checks from evaluation still to be completed.
+Example records and app screenshots are synthetic. Research-dataset comparisons are shared as cohort-level aggregates. Source manifests record the copied implementation files and their hashes. The verification record distinguishes executed checks from evaluation still to be completed.

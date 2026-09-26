@@ -17,6 +17,12 @@ For the current participant-review workflow, authorized records are read securel
 
 # Screenshot provenance
 
-All three images in `assets/` were captured from the isolated simulator on September 26, 2026. The underlying artificial history was generated with seed 131 and spans 120 days. The visible sentence comes from an actual offline Qwen3-4B-Instruct-2507-4bit wording pass over validated engine facts. Clock formatting and links are checked against those facts.
+The brief, evidence, and individual-day images in `assets/` were captured from the isolated simulator on September 26, 2026. The underlying artificial history was generated with seed 131 and spans 120 days. The visible sentence comes from an actual offline Qwen3-4B-Instruct-2507-4bit wording pass over validated engine facts. Clock formatting and links are checked against those facts.
 
 The native app source, signing configuration, service credentials, participant reports, and simulator app bundle are maintained outside this portfolio snapshot.
+
+## Home, Community, and My Data captures
+
+The additional Home, Community, and My Data PNGs use native iOS Simulator capture (`simctl io screenshot`), which saves the device framebuffer without the desktop cursor or computer-use overlays. The `-SyntheticAppPreview` Debug simulator route branches before Firebase configuration and HealthKit collection. It reuses the production Home header and tile components, Community hub, and My Data chart view. A small preview shell supplies navigation and local fixtures; account-backed destinations are inert.
+
+Home and My Data values are visual fixtures independent of the 120-day pattern-engine example. My Data is shown at its chart section using `-SyntheticAppPreviewCharts`. The production app's account loading, permissions, and data-writing behavior are outside this screenshot harness.

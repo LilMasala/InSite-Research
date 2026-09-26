@@ -35,3 +35,16 @@ The interactive comparison uses the full twin rollout and its existing context f
 5. **Research-data evaluation:** perform held-out comparisons with disclosed splitting, conditioning, and uncertainty procedures. This portfolio's preparation did not rerun participant-level research benchmarks.
 
 Only the levels and individual checks recorded in `verification.json` should be described as rerun for this snapshot. The [claim audit](twin-claim-audit.md) records the evidence still needed for broader performance claims.
+
+## Existing research-data comparison
+
+The saved benchmark summary includes cohort-level metrics checked against three aggregate report artifacts. The source reports and seven evaluation-source files are identified by SHA-256 in [`twin-benchmark-summary.json`](../examples/twin-benchmark-summary.json). Individual records, model weights, and per-person results stay in the private working environment.
+
+To render the checked-in aggregate results:
+
+```sh
+pip install -r requirements-figures.txt
+python scripts/plot_twin_benchmark.py
+```
+
+This recreates the figure from the saved summary. The original fits and bootstrap resampling are separate computations described in [the benchmark methods](twin-benchmark.md).

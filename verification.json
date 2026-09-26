@@ -1,6 +1,6 @@
 {
   "date": "2026-09-26",
-  "data_scope": "Synthetic and published virtual-patient inputs only",
+  "data_scope": "Synthetic example records and app fixtures; cohort-level aggregates from prior HUPA-UCM and T1D-UOM research benchmarks",
   "environment": {
     "python": "3.11.10",
     "dependencies": {
@@ -78,6 +78,23 @@
     {
       "check": "Synthetic basal export preserves continuous delivered intervals across midnight; deleting actual-delivery events preserves missingness",
       "result": "2 tests passed in both snapshot and original library"
+    },
+    {
+      "check": "Native iOS Simulator screenshots: Home, Community, My Data, and synthetic evidence flow",
+      "result": "Captured using simctl io screenshot from isolated DEBUG previews; device framebuffer excludes computer-use cursor"
+    },
+    {
+      "check": "Synthetic full-app preview build",
+      "result": "Debug simulator build succeeded; preview skips Firebase initialization and HealthKit construction; account-backed actions disabled"
+    },
+    {
+      "check": "Existing digital-twin benchmark artifacts",
+      "result": "Three aggregate report hashes and seven evaluation-source hashes verified; 27 aggregate metric values independently matched to saved reports",
+      "scope": "Saved cohort-level metrics only; no benchmark fits or bootstrap rerun"
+    },
+    {
+      "command": "python scripts/plot_twin_benchmark.py",
+      "result": "Rendered comparison figure from checked-in aggregate-only summary; visual review passed"
     }
   ],
   "not_rerun": [

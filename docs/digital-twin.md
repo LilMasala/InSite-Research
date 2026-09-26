@@ -14,7 +14,11 @@ The [interactive demo](../demo/README.md) uses the full context and physiology r
 
 The separate [calibration script](../scripts/build_calibration_example.py) generates synthetic observations, fits an earlier chronological segment, and replays the final day with held-out glucose reserved for scoring. The saved JSON records the optimization budget, parameter sources, and results. This evaluates one reproducible example under known recorded inputs.
 
-## What the checks show
+## Comparison with other digital twins
+
+The saved benchmark compares this physiological twin with T1DSim_AI on HUPA-UCM and T1D-UOM and with ReplayBG on HUPA-UCM. It finds comparable glucose errors and a stronger HUPA low-event discrimination result under recorded-input replay. The [benchmark methods and results](twin-benchmark.md) include cohort sizes, paired intervals, input conditioning, and initialization differences.
+
+## What the implementation checks show
 
 The numerical check runs the differentiable ODE and the `simglucose` reference under matched six-hour synthetic inputs for two published virtual subjects. The maximum pointwise difference is 1.34 mg/dL and pooled RMSE is 0.53 mg/dL. This is evidence that the two implementations agree for this limited numerical check. It does not validate fitted-person forecasts or treatment effects ([figure and reproduction script](../assets/twin-numerical-check.png), [script](../scripts/twin_numerical_check.py)).
 

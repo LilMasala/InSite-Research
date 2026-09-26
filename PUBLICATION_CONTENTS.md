@@ -17,12 +17,12 @@ This file defines the first public snapshot. Each included part should help a re
 ## Decisions before publishing
 
 - Confirm the README's motivation and voice.
-- Choose the GitHub owner/name and reuse license for the original portfolio/pattern files.
+- Choose a reuse license for the original portfolio/pattern files.
 - Review the exact staged file list and the claim audit.
 - Review the synthetic calibration result and its conditioning/optimization limits alongside the interactive prior-coefficient simulations.
 
 ## Separate future releases
 
-The iOS app's signed builds continue through TestFlight. Public web hosting of the sandbox is a separate deployment, with resource limits and access/origin configuration. Real-data benchmark figures can be added once their aggregate results and evaluation provenance have been independently checked.
+The iOS app's signed builds continue through TestFlight. Public web hosting of the sandbox is a separate deployment, with resource limits and access/origin configuration. The reviewed research-data benchmark figure and aggregate-only summary are included with protocol and provenance limits.
 
 The private application's backend configuration, credentials, participant histories, model weights, and upstream datasets remain in their existing locations outside this snapshot.

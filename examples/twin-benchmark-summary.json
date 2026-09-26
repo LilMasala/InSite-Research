@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "title": "Aggregate summary of the existing held-out twin comparison",
+  "reviewStatus": "Aggregate values checked against saved report JSON and evaluation source code; no participant-level results were opened and no benchmark was rerun.",
+  "interpretation": "Retrospective five-hour replay with recorded future inputs. This is not a prospective forecast benchmark or validation of altered-dose counterfactuals.",
+  "sourceRepository": "t1d-twin development repository; source report files are not copied into this portfolio.",
+  "sourceReports": [
+    {
+      "path": "artifacts/benchmark/t1dsimai/hupa/report_twin_v2.json",
+      "sha256": "b3f2bd1ea52a6b78aa88d642eba73053a712358df018866ef1b339433606d348",
+      "twinFileLabel": "twin_v2.json",
+      "cohort": "HUPA-UCM",
+      "people": 17,
+      "heldOutSequences": 217,
+      "containsParticipantIdentifierList": true
+    },
+    {
+      "path": "artifacts/benchmark/t1dsimai/uom/report_twin_v2.json",
+      "sha256": "bfa28c2467a37e9cd1f701069df8cf47e65a761266d4131ed9e64e6ed7b2cc2b",
+      "twinFileLabel": "twin_v2.json",
+      "cohort": "T1D-UOM",
+      "people": 4,
+      "heldOutSequences": 56,
+      "containsParticipantIdentifierList": true
+    },
+    {
+      "path": "artifacts/benchmark/t1dsimai/hupa/report_with_replaybg.json",
+      "sha256": "843ee6ac6a44f8773751b6d954ef462a674d14126c5a5ce655d56de7110970b9",
+      "twinFileLabel": "twin_v2.json",
+      "cohort": "HUPA-UCM",
+      "people": 17,
+      "heldOutSequences": 217,
+      "containsParticipantIdentifierList": true
+    }
+  ],
+  "evaluationCodeSha256": {
+    "scripts/benchmark_t1dsimai_export.py": "c6047cc2f44a06ad079456864706a05b4b5060c6ca7fe79b2722f01c2029c3b0",
+    "scripts/benchmark_t1dsimai_train.py": "07c7a840f9b78d5fca4fa3d49ec5be6d3eb1f1dabf574aefbe72bd0ac6c4c5a3",
+    "scripts/benchmark_t1dsimai_score.py": "df11c72cdb2da71fbe7a49d8276a1f0d3daf00ccd8badd8762f0c3a1d6d260b1",
+    "scripts/benchmark_t1dsimai_report.py": "4f2cc4e21d1a07097e9a99dad6fc558f0f2185ab3651633a7236d018feb6adef",
+    "scripts/benchmark_replaybg_run.py": "4d40d4b3e622000e6778c248f8b8f4d93466a4445e04c09c4a1b79b27191913a",
+    "scripts/twin_fit.py": "7735072bc3402fc529a273098bad74237d25b11317af649bed87a16c01da83d6",
+    "t1d_twin/fit.py": "ad30e33d51c4f796c52e3d8718ee23178c60a19823f4d1bf0928d957cce66374"
+  },
+  "protocol": {
+    "sequenceLengthMinutes": 300,
+    "samplingMinutes": 5,
+    "rmseExcludesOrigin": true,
+    "forecastConditioning": "Recorded future insulin, logged meals, and available recorded context; the twin warm-start also replays six hours of preceding recorded inputs and then anchors to the first CGM point.",
+    "pairwiseRmseInference": "95% interval resamples participants with replacement and carries along each selected participant's full sequence vector; the reported Wilcoxon p-value is calculated over flattened per-sequence paired differences and is not participant-clustered.",
+    "lowEventDefinition": "At least three consecutive five-minute readings below 70 mg/dL during the five-hour window.",
+    "noiseMatchedBaseline": "T1DSim_AI and ReplayBG point predictions receive 32 simulated noise draws per sequence using the twin-fit residual spread and a 6% proportional component."
+  },
+  "results": {
+    "HUPA-UCM": {
+      "forecastRmseMgDl": {
+        "t1dTwinV2Warm": 47.483,
+        "t1dsimAiPersonalPublishedRecipe": 49.659,
+        "t1dsimAiPersonalLearningRate1eMinus3": 48.410,
+        "t1dsimAiPopulation": 53.436,
+        "replayBgCold": 48.995
+      },
+      "pairedRmseTwinMinusT1DSimAiTuned": {
+        "meanMgDl": -0.927,
+        "clusterBootstrap95CiMgDl": [-7.060, 3.595],
+        "wilcoxonPSequenceLevel": 0.6819,
+        "pairedSequences": 217
+      },
+      "pairedRmseTwinMinusT1DSimAiPopulation": {
+        "meanMgDl": -5.953,
+        "clusterBootstrap95CiMgDl": [-13.597, -0.332],
+        "wilcoxonPSequenceLevel": 0.0095,
+        "pairedSequences": 217
+      },
+      "pairedRmseTwinMinusReplayBgCold": {
+        "meanMgDl": -1.510,
+        "clusterBootstrap95CiMgDl": [-5.860, 4.090],
+        "wilcoxonPSequenceLevel": 0.2872,
+        "pairedSequences": 217
+      },
+      "hypoglycemia": {
+        "observedLowEvents": 50,
+        "sequenceCount": 217,
+        "metrics": {
+          "t1dTwinV2WarmProbability": {
+            "auroc": 0.739,
+            "brier": 0.156,
+            "sensitivityAt0_5": 0.400,
+            "ppvAt0_5": 0.741
+          },
+          "t1dsimAiTunedPlusNoiseProbability": {
+            "auroc": 0.597,
+            "brier": 0.252,
+            "sensitivityAt0_5": 0.220,
+            "ppvAt0_5": 0.333
+          },
+          "replayBgColdPlusNoiseProbability": {
+            "auroc": 0.674,
+            "brier": 0.184,
+            "sensitivityAt0_5": 0.300,
+            "ppvAt0_5": 0.625
+          }
+        },
+        "pairedDifferencesTwinMinusT1DSimAiTunedPlusNoise": {
+          "auroc": 0.142,
+          "participantClusterBootstrap95Ci": [0.058, 0.222],
+          "brier": -0.096,
+          "brierParticipantClusterBootstrap95Ci": [-0.143, -0.048]
+        },
+        "pairedDifferencesTwinMinusReplayBgColdPlusNoise": {
+          "auroc": 0.065,
+          "participantClusterBootstrap95Ci": [0.016, 0.126],
+          "brier": -0.028,
+          "brierParticipantClusterBootstrap95Ci": [-0.048, -0.011]
+        }
+      }
+    },
+    "T1D-UOM": {
+      "forecastRmseMgDl": {
+        "t1dTwinV2Warm": 41.788,
+        "t1dsimAiPersonalPublishedRecipe": 46.312,
+        "t1dsimAiPersonalLearningRate1eMinus3": 45.293,
+        "t1dsimAiPopulation": 57.173
+      },
+      "pairedRmseTwinMinusT1DSimAiTuned": {
+        "meanMgDl": -3.505,
+        "clusterBootstrap95CiMgDl": [-14.256, 6.505],
+        "wilcoxonPSequenceLevel": 0.6073,
+        "pairedSequences": 56
+      },
+      "pairedRmseTwinMinusT1DSimAiPopulation": {
+        "meanMgDl": -15.385,
+        "clusterBootstrap95CiMgDl": [-19.798, -10.644],
+        "wilcoxonPSequenceLevel": 0.000496,
+        "pairedSequences": 56
+      },
+      "hypoglycemia": {
+        "observedLowEvents": 7,
+        "sequenceCount": 56,
+        "metrics": {
+          "t1dTwinV2WarmProbability": {"auroc": 0.499, "brier": 0.110},
+          "t1dsimAiTunedPlusNoiseProbability": {"auroc": 0.541, "brier": 0.124}
+        },
+        "pairedDifferencesTwinMinusT1DSimAiTunedPlusNoise": {
+          "auroc": -0.042,
+          "participantClusterBootstrap95Ci": [-0.289, 0.158],
+          "brier": -0.013,
+          "brierParticipantClusterBootstrap95Ci": [-0.038, 0.005]
+        },
+        "interpretation": "Seven events are insufficient for a useful hypoglycemia comparison."
+      },
+      "replayBgComparison": {
+        "status": "Excluded from the twin_v2 comparison",
+        "reason": "The available aggregate report uses twin_final.json rather than twin_v2.json."
+      }
+    }
+  },
+  "limitations": [
+    "The comparison is conditional replay: held-out future delivered insulin, logged meals, and available context are supplied from records. It is not a forecast made only from information available at the origin.",
+    "The t1d-twin warm arm uses six hours of pre-sequence input history; T1DSim_AI does not use that history. Shared windows therefore do not mean identical information sets.",
+    "The learning-rate-1e-3 T1DSim_AI run is reported as tuned, but no nested validation or selection protocol was found. Treat this comparison as exploratory because tuning may have used the same held-out windows.",
+    "The aggregate reports identify the fit by filename but do not contain model-weight hashes, raw-input hashes, dataset revision, or the exact empirical-prior fit set. Source code supports leave-one-person-out priors, but this cannot be confirmed for these specific saved fits from the aggregate report alone.",
+    "RMSE Wilcoxon p-values are sequence-level, while confidence intervals use participant-cluster bootstrap. Repeated windows within a person make the p-values potentially overconfident.",
+    "The current scoring source shadows its assimilation flag with a local list, so assimilation rows are excluded from this summary; only the warm, non-assimilated arm is reported.",
+    "The HUPA-UCM hypoglycemia result is based on 50 events; T1D-UOM has only seven. Neither supports clinical risk claims.",
+    "Counterfactual accuracy for changed insulin settings has not been established against observed treatment changes or prospective outcomes. Agreement across fitted variants is robustness evidence, not validation of alternate-dose outcomes.",
+    "The original aggregate report JSON files contain participant identifier lists and are not included here. This summary keeps only aggregate counts, metrics, and source hashes."
+  ],
+  "externalSources": [
+    {"name": "HUPA-UCM Diabetes Dataset", "url": "https://doi.org/10.17632/3hbcscwz44.1"},
+    {"name": "T1D-UOM dataset", "url": "https://doi.org/10.5281/zenodo.15806142"},
+    {"name": "T1DSim_AI source repository", "url": "https://github.com/mosqueralopez/T1DSim_AI"},
+    {"name": "T1DSim_AI paper", "url": "https://doi.org/10.1007/s00521-026-12018-x"}
+  ]
+}

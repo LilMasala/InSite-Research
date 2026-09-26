@@ -20,4 +20,6 @@ It processes the two 120-day synthetic scenarios and can take tens of minutes; i
 
 ## External data
 
-The demo uses synthetic inputs; no external dataset is packaged. The separate HUPA-UCM dataset is outside this snapshot. Its [Mendeley page](https://data.mendeley.com/datasets/3hbcscwz44/1) lists CC BY 4.0, and the related [paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC11214197/) provides study context. This portfolio includes no HUPA records or derived rows. Separate use should follow the source attribution and license terms.
+The demo uses synthetic inputs; no external dataset is packaged. The separate HUPA-UCM dataset is outside this snapshot. Its [Mendeley page](https://data.mendeley.com/datasets/3hbcscwz44/1) lists CC BY 4.0, and the related [paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC11214197/) provides study context. This portfolio includes cohort-level twin benchmark metrics with source hashes; example histories and screenshots use synthetic data. Separate use should follow the source attribution and license terms.
+
+The [twin comparison](twin-benchmark.md) documents the saved HUPA-UCM and T1D-UOM evaluation. The aggregate summary is separately labeled from the synthetic pattern examples.
