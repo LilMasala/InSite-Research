@@ -128,6 +128,23 @@ FEATURES: dict[str, tuple[str, str]] = {
     "workout_minutes_24h": ("recorded workout duration", "minutes"),
 }
 
+SUPPLEMENTAL_FEATURES = {
+    "recorded_iob_24h_mean": ("recorded_iob", "mean", "recorded pump insulin on board", "U"),
+    "body_mass_24h_mean": ("body_mass", "mean", "recorded body mass", "kg"),
+    "resting_heart_rate_24h_mean": ("resting_heart_rate", "mean", "recorded resting heart rate", "bpm"),
+    "active_energy_24h": ("active_energy", "sum", "recorded active energy", "kcal"),
+    "basal_energy_24h": ("basal_energy", "sum", "recorded resting energy", "kcal"),
+    "move_minutes_24h": ("move_minutes", "sum", "recorded move time", "minutes"),
+    "workout_distance_24h": ("workout_distance", "sum", "recorded workout distance", "m"),
+    "workout_min_hr_24h": ("workout_min_hr", "mean", "recorded workout minimum heart rate", "bpm"),
+    "workout_max_hr_24h": ("workout_max_hr", "mean", "recorded workout maximum heart rate", "bpm"),
+    "workout_energy_24h": ("workout_energy_kcal", "sum", "recorded workout energy", "kcal"),
+}
+FEATURES.update({key: (spec[2], spec[3]) for key, spec in SUPPLEMENTAL_FEATURES.items()})
+FEATURES.update({"therapy_carb_ratio": ("observed carbohydrate ratio at this time", "g/U"),
+                 "therapy_isf": ("observed correction factor at this time", "mg/dL/U"),
+                 "therapy_scheduled_basal": ("scheduled basal at this time", "U/hour")})
+
 DAILY_FEATURES = tuple(dict.fromkeys((*FEATURES, *(
     "sleep_variability_7d", "sleep_shortfall_7d_hours",
     "sleep_hours", "sleep_rem_fraction", "sleep_deep_fraction",

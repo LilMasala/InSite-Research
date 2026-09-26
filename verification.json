@@ -105,6 +105,17 @@
       "check": "Updated twin demo validation and scenario presentation",
       "result": "Local browser verified the shorter-sleep preset, computed metric differences and lunch/bolus markers; stored calibration and aggregate benchmark rendered correctly. Activity preset code reviewed; browser click verification was inconclusive.",
       "scope": "Synthetic simulations and previously verified cohort-level benchmark aggregates"
+    },
+    {
+      "command": "TWIN_COMPILE=0 OMP_NUM_THREADS=1 python -m pytest tests -q",
+      "result": "31 passed in 10.22s",
+      "scope": "Updated public snapshot, including three outcome-window highlighting tests",
+      "executor": "primary"
+    },
+    {
+      "command": "python scripts/check_portfolio.py",
+      "result": "79 files checked; 28 source hashes matched; no detected boundary or local-link failures",
+      "scope": "September 26 private-brief status and evidence-highlighting update"
     }
   ],
   "not_rerun": [

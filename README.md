@@ -4,7 +4,7 @@
 
 I built InSite to bring glucose, insulin, sleep, activity, cycle history, and daily logs into one place. The research focuses on two questions: which combinations of recorded context accompany recurring glucose outcomes, and how well can a personal physiological model reproduce those responses?
 
-The iOS app is in a small TestFlight pilot. Pattern cards are being evaluated using synthetic histories and remain disabled for participants. This repository contains the research implementation, reproducible examples, evaluation methods, and app screenshots.
+The iOS app is in a small TestFlight pilot. Automatic pattern briefs are now deployed to the private backend for opted-in users. The latest app changes, including highlighted evidence windows, have passed simulator tests and are awaiting TestFlight upload and physical-device verification. This repository contains the research implementation, reproducible examples, evaluation methods, and app screenshots.
 
 My longer-term goal is personalized automated insulin delivery (AID): learn a state that preserves the consequences of insulin decisions, then use it to plan across their delayed effects. The app, pattern engine, and physiological twin provide the data, interpretable observations, and simulation tools for that research.
 
@@ -89,7 +89,7 @@ For two virtual subjects under matched six-hour inputs, the maximum difference f
 
 The pattern engine constructs event-aligned and daily rows from timestamped observations. Features cover preceding hours, days, and weeks. Historical subgroup search finds recurring relationships; current-context retrieval finds earlier situations similar to the present context.
 
-Candidate findings pass chronological, coverage, support, matching, and uncertainty checks. Each released observation retains its supporting episodes. A local language model words the structured finding, and a validation step checks the claims and links against the evidence.
+Candidate findings pass chronological, coverage, support, matching, and uncertainty checks. Each released observation retains its supporting episodes. The automatic pilot uses reviewed, source-derived wording. Offline experiments also use a local language model to phrase structured findings, with checks against the underlying claims and evidence links.
 
 For example, a row anchored to a logged meal can describe the previous night's sleep, recent activity, cycle records, site age and location, glucose before the meal, and recorded carbohydrates and insulin. Its targets describe what followed: early and later glucose responses, variability, or sustained low and high episodes. The search can combine those features to identify a recurring context, then retrieve the actual days behind it.
 
@@ -101,7 +101,7 @@ flowchart LR
     C --> E[Evidence checks]
     D --> E
     E --> F[Structured finding]
-    F --> G[Validated local-model wording]
+    F --> G[Participant wording]
     G --> H[Observation with linked episodes]
 ```
 
@@ -122,7 +122,13 @@ These captures use synthetic data in the actual iOS app. Tapping an observation 
 | --- | --- | --- |
 | <img src="assets/app-brief-synthetic.png" width="250" alt="Synthetic InSite observation"> | <img src="assets/app-evidence-synthetic.png" width="250" alt="Supporting synthetic glucose traces"> | <img src="assets/app-day-synthetic.png" width="250" alt="Individual synthetic episode"> |
 
-[App and data handling](docs/app-and-privacy.md)
+### Highlighting the evidence
+
+The chart highlights the time window used to calculate the finding and emphasizes the measured points inside it. The engine supplies these boundaries alongside the evidence.
+
+<img src="assets/evidence-highlight-synthetic.png" width="352" alt="Synthetic glucose chart with the evaluated interval shaded teal and its measured points highlighted">
+
+[Automatic brief delivery and verification](docs/automatic-briefs.md) · [App and data handling](docs/app-and-privacy.md)
 
 ## Research direction: automated insulin delivery
 

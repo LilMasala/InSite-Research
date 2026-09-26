@@ -2,7 +2,7 @@
 
 InSite is a SwiftUI iOS app with a private Firebase backend. Its collection paths cover HealthKit measurements, connected pump or Nightscout records, and direct logs such as mood and infusion-site changes. Availability depends on the user's device, permissions, source system, and actual records.
 
-The pilot app has been distributed through TestFlight. Pattern findings remain switched off for participants. The screenshots in this portfolio use a Debug-only synthetic preview route which bypasses authentication and health-data collection. That route renders the same brief-card component used by the future participant view.
+The pilot app has been distributed through TestFlight. Private automatic brief processing is enabled for opted-in users. The latest participant view and evidence-highlighting changes await a new TestFlight upload and physical-device verification. The screenshots in this portfolio use a Debug-only synthetic preview route which bypasses authentication and health-data collection. That route renders the same brief-card component used by the participant view.
 
 The screenshot sequence shows the intended interaction:
 
@@ -13,7 +13,7 @@ The screenshot sequence shows the intended interaction:
 
 Collection preserves source and timing. Delivered insulin and scheduled pump profiles represent different information. Missing delivery stays missing. The twin and analytics must account for that distinction.
 
-For the current participant-review workflow, authorized records are read securely, analysis and wording run locally, and results are viewed privately. Public examples use artificial histories. The cloud run used to produce this demonstration accepted only a fixed synthetic generator; it had no participant database access.
+For local research review, authorized records are read securely, analysis and wording run locally, and results are viewed privately. The automatic app pilot has separate authorization for private cloud processing and protected per-user delivery. It uses source-derived wording, with external model calls and notifications off. Public examples use artificial histories. [Delivery and verification](automatic-briefs.md).
 
 # Screenshot provenance
 
@@ -26,3 +26,7 @@ The native app source, signing configuration, service credentials, participant r
 The additional Home, Community, and My Data PNGs use native iOS Simulator capture (`simctl io screenshot`), which saves the device framebuffer without the desktop cursor or computer-use overlays. The `-SyntheticAppPreview` Debug simulator route branches before Firebase configuration and HealthKit collection. It reuses the production Home header and tile components, Community hub, and My Data chart view. A small preview shell supplies navigation and local fixtures; account-backed destinations are inert.
 
 Home and My Data values are visual fixtures independent of the 120-day pattern-engine example. My Data is shown at its chart section using `-SyntheticAppPreviewCharts`. The production app's account loading, permissions, and data-writing behavior are outside this screenshot harness.
+
+## Evaluated-window capture
+
+`evidence-highlight-synthetic.png` is a native chart image exported from an iOS test attachment on September 26, 2026. It uses a small artificial chart fixture with an explicit evaluated interval. It demonstrates rendering and point selection; the 120-day offline wording example above has separate provenance.

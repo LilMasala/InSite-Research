@@ -1,6 +1,6 @@
 # Pattern discovery
 
-The bundled engine builds retrospective associations and similar-history summaries from one person's recorded history. The participant app currently keeps pattern cards disabled. The implementation is in [personal_context_engine.py](../src/insite_analytics/personal_context_engine.py), with numeric rule proposals in [numeric_search.py](../src/insite_analytics/numeric_search.py) and default settings in [daily_brief.py](../src/insite_analytics/daily_brief.py).
+The bundled engine builds retrospective associations and similar-history summaries from one person's recorded history. The private pilot now schedules automatic briefs for opted-in users; the latest app surface awaits TestFlight verification. The implementation is in [personal_context_engine.py](../src/insite_analytics/personal_context_engine.py), with numeric rule proposals in [numeric_search.py](../src/insite_analytics/numeric_search.py) and default settings in [daily_brief.py](../src/insite_analytics/daily_brief.py).
 
 ## Features and target rows
 
@@ -24,4 +24,22 @@ Event and daily numeric searches use the earlier 60% of eligible dates for disco
 
 The default requires six matched units per arm. Up to six candidates across clock, event, and daily branches enter one frozen confirmation family. Support requires the direction to agree with discovery, a minimum effect, stable direction when each confirmation day is omitted in turn, and an approximate contiguous-day block-bootstrap interval excluding zero. The default interval uses two-day blocks and 10,000 draws with a Bonferroni adjustment across that global family. These intervals are approximate; repeated later snapshots are not anytime-valid. If support is insufficient, the engine can return no finding.
 
-Each released item links to structured evidence: comparison outcome and horizon, support, matched method, an interval, and representative recorded episodes. The engine marks these results retrospective and noncausal. The [app and privacy notes](app-and-privacy.md) describe the disabled participant surface. The saved [synthetic example](../examples/README.md) includes wording accepted in an earlier offline local-model pass; the model runtime and weights are not bundled, and a fresh demo run does not call a language model.
+Each released item links to structured evidence: comparison outcome and horizon, support, matched method, an interval, and representative recorded episodes. The engine marks these results retrospective and noncausal. The [app and privacy notes](app-and-privacy.md) describe private participant delivery. The saved [synthetic example](../examples/README.md) includes wording accepted in an earlier offline local-model pass; the model runtime and weights are not bundled, and a fresh demo run does not call a language model.
+
+## Evidence windows and imported histories
+
+Each episode carries the start and end of the evaluated outcome. The engine adds
+`focusWindows`, expressed in elapsed minutes relative to the trace origin, for
+native chart highlighting. A late-response finding highlights its late interval;
+an analogous-day finding uses its selected horizon, such as overnight. Missing or
+invalid boundaries produce an empty highlight list. See
+[evidence_focus.py](../src/insite_analytics/evidence_focus.py) and its
+[synthetic tests](../tests/test_evidence_focus.py).
+
+The automatic worker explicitly permits retrospective reconstruction for similar-day
+retrieval from imported histories. Association-family pre-anchor availability stays
+strict. The package default and the worker configuration are separate choices.
+Recent feature additions include observed therapy-block settings, supplemental
+recorded metrics, and completed-night sleep totals derived from Watch sleep stages.
+Scheduled basal remains a profile feature; delivered-insulin observations retain
+their own provenance.

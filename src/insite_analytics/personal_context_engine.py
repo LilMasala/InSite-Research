@@ -51,6 +51,7 @@ from .daily_brief import (
 )
 from .numeric_search import (
     DAILY_FEATURES,
+    SUPPLEMENTAL_FEATURES,
     EVENT_FEATURES,
     FEATURES as NUMERIC_FEATURES,
     describe_rule,
@@ -630,6 +631,19 @@ def _therapy_profile_at(records: Sequence[BriefRecord], anchor: datetime) -> str
     return str(fingerprint) if isinstance(fingerprint, str) and fingerprint else None
 
 
+def _therapy_values_at(records: Sequence[BriefRecord], anchor: datetime, zone: ZoneInfo) -> dict[str, float | None]:
+    keys = {"therapy_carb_ratio": "carbRatio", "therapy_isf": "insulinSensitivity", "therapy_scheduled_basal": "basalRate"}
+    result = dict.fromkeys(keys)
+    candidates = [r for r in records if r.metric == "therapy_profile_observed" and _known_before(r, anchor)]
+    if not candidates: return result
+    latest = max(candidates, key=lambda r: r.end_or_start)
+    local = anchor.astimezone(zone); minute = local.hour * 60 + local.minute
+    for block in latest.attributes.get("hour_ranges", []):
+        if block["startMinute"] <= minute < block["endMinute"]:
+            return {key: float(block[field]) for key, field in keys.items()}
+    return result
+
+
 def _union_seconds(pieces: Sequence[tuple[datetime, datetime]]) -> float:
     ordered = sorted(pieces)
     if not ordered:
@@ -774,6 +788,18 @@ def _collapse_sleep_intervals(records: Sequence[BriefRecord]) -> list[BriefRecor
     stages = [record for record in records if record.metric in _SLEEP_STAGE_METRICS and record.end is not None]
     stage_summaries = _sleep_stage_summaries(stages)
     base = [record for record in records if record.metric != "sleep_asleep_interval"]
+    # Watch stage-only exports need the same completed-night totals as older
+    # asleep-interval exports. Keep one total when both representations exist.
+    totals = [record for record in base + derived if record.metric == "sleep_hours"]
+    for summary in stage_summaries:
+        if summary.metric != "sleep_stage_asleep_hours":
+            continue
+        if any(record.start < summary.end_or_start and record.end_or_start > summary.start
+               for record in totals):
+            continue
+        total = replace(summary, id=summary.id + "-total", metric="sleep_hours")
+        derived.append(total)
+        totals.append(total)
     return base + derived + stage_summaries
 
 
@@ -923,7 +949,12 @@ def _anchor_features(
     mood_history = _mood_lagged_summaries(records, anchor, zone)
     cycle_site_history = _cycle_site_history(records, anchor, zone)
     symptom_history = _menstrual_symptom_summaries(records, anchor, zone)
+    supplemental = {key: _feature_value(records, spec[0], _add_elapsed(anchor, hours=-24), anchor,
+                                        anchor, aggregation=spec[1])[0]
+                    for key, spec in SUPPLEMENTAL_FEATURES.items()}
     return {
+        **supplemental,
+        **_therapy_values_at(records, anchor, zone),
         "glucose_1h_mean": g1["mean"], "glucose_1h_slope": g1["slope"],
         "glucose_3h_mean": g3["mean"], "glucose_3h_slope": g3["slope"], "glucose_3h_variability": g3["variability"],
         "glucose_3h_low_rate": g3["low_rate"], "glucose_3h_high_rate": g3["high_rate"],
@@ -2006,6 +2037,7 @@ def _event_evidence(item: Mapping[str, Any], *, target: str, config: BriefConfig
                 "id": f"{item['id']}-{group}-{row['date'].isoformat()}",
                 "label": f"{group.title()} · {row['date'].isoformat()}", "group": group,
                 "start": _iso(row["anchor"]), "outcomeEnd": _iso(row["outcomeEnds"][target]),
+                "outcomeStart": _iso(_add_elapsed(row["anchor"], hours=3) if target in {"lateResponse", "bolusResponse3_6h", "correctionOnlyResponse3_6h"} else row["anchor"]),
                 "points": row.get("trace", []), "events": row.get("events", []),
                 "episodeKind": episode_kind,
             }
@@ -2107,6 +2139,7 @@ def _daily_evidence(item: Mapping[str, Any], *, config: BriefConfig) -> dict[str
                 "id": f"{item['id']}-{group}-{row['date'].isoformat()}",
                 "label": f"{group.title()} · {row['date'].isoformat()}", "group": group,
                 "start": _iso(row["anchor"]), "outcomeEnd": _iso(row["outcomeEnds"][item["target"]]),
+                "outcomeStart": _iso(row.get("outcomes", {}).get("overnight", {}).get("start", row["anchor"]) if target == "overnightResponse" else row["anchor"]),
                 "points": row.get("trace", []), "events": row.get("events", []),
             })
     direction = "higher" if effect > 0 else "lower"
@@ -2782,12 +2815,14 @@ def _clock_evidence(item: Mapping[str, Any], *, config: BriefConfig) -> dict[str
             "id": f"{item['id']}-selected-{row['date'].isoformat()}", "label": f"Selected interval · {row['date'].isoformat()}",
             "group": "clock_window", "start": _iso(row["start"]),
             "outcomeEnd": _iso(_add_elapsed(row["start"], hours=int(item["width"]))),
+            "outcomeStart": _iso(row["start"]),
             "points": row["observed"].get("points", []), "events": [],
         })
         episodes.append({
             "id": f"{item['id']}-comparison-{row['date'].isoformat()}", "label": f"Adjacent comparison · {row['date'].isoformat()}",
             "group": "comparison", "start": _iso(row["comparisonStart"]),
             "outcomeEnd": _iso(_add_elapsed(row["comparisonStart"], hours=int(item["width"]))),
+            "outcomeStart": _iso(row["comparisonStart"]),
             "points": row["comparisonOutcome"].get("points", []), "events": [],
         })
     observed_summary = _outcome_summary(
@@ -3400,7 +3435,7 @@ def _current_context(records: Sequence[BriefRecord], *, anchor: datetime, zone: 
         facts=[{"label": "Recorded 3-hour mean", "value": f"{mean:.0f} mg/dL"}, {"label": "Observed coverage", "value": f"{coverage * 100:.0f}%"}] + extra_facts,
         analysis_kind="current_recorded_context", evidence_level="observed_history", method_label="observed 3-hour CGM and available completed-context summary",
         availability_mode="strict_as_of_anchor", support={"unit": "observed CGM samples", "count": len(points)},
-        episodes=[{"id": "current-context", "label": "Recent recorded window", "group": "current_context", "start": _iso(start), "outcomeEnd": _iso(anchor), "points": points, "events": []}],
+        episodes=[{"id": "current-context", "label": "Recent recorded window", "group": "current_context", "start": _iso(start), "outcomeEnd": _iso(anchor), "outcomeStart": _iso(start), "points": points, "events": []}],
     )
     claim = f"Over the previous 3 hours, recorded glucose averaged {mean:.0f} mg/dL and was {direction}."
     item = _fact_item(
@@ -3633,7 +3668,8 @@ def build_personal_context(
         str(pattern_by_finding_id[finding_id]["id"])
         for finding_id in current_relevant_ids if finding_id in pattern_by_finding_id
     }
-    return present_brief(result, current_relevant_ids=relevant_item_ids)
+    from insite_analytics.evidence_focus import attach_evidence_focus
+    return attach_evidence_focus(present_brief(result, current_relevant_ids=relevant_item_ids))
 
 
 __all__ = ["ENGINE_REVISION", "build_personal_context"]

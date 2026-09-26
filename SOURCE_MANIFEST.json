@@ -19,16 +19,16 @@
     {
       "matches_upstream": true,
       "snapshot_path": "src/insite_analytics/personal_context_engine.py",
-      "snapshot_sha256": "e6860f088828fc6b179da9e54d7e4a2ce3da3dd31800f4f4ce1291361d6d2b2f",
+      "snapshot_sha256": "ca0cf0f039d8e0c151e402059a56d1142b63f18b5bfcd4dba48480f9006eb355",
       "upstream_path": "insite_analytics/personal_context_engine.py",
-      "upstream_sha256": "e6860f088828fc6b179da9e54d7e4a2ce3da3dd31800f4f4ce1291361d6d2b2f"
+      "upstream_sha256": "ca0cf0f039d8e0c151e402059a56d1142b63f18b5bfcd4dba48480f9006eb355"
     },
     {
       "matches_upstream": true,
       "snapshot_path": "src/insite_analytics/numeric_search.py",
-      "snapshot_sha256": "ab4e981d20d5918bfecbfde242308c89e1cc669155eac6f8b6b96c75730dfbe4",
+      "snapshot_sha256": "166e2d0d3f5161ec56892057ac938c4de814ba63dbdfba97490cc462430e8f3c",
       "upstream_path": "insite_analytics/numeric_search.py",
-      "upstream_sha256": "ab4e981d20d5918bfecbfde242308c89e1cc669155eac6f8b6b96c75730dfbe4"
+      "upstream_sha256": "166e2d0d3f5161ec56892057ac938c4de814ba63dbdfba97490cc462430e8f3c"
     },
     {
       "matches_upstream": true,
@@ -64,9 +64,23 @@
       "snapshot_sha256": "6221c422f6ecb9d8280217bad4d55dc3405ee1c9e0f975e16e349684b4b42ef7",
       "upstream_path": "insite_analytics/tests/test_response_outcome_context.py",
       "upstream_sha256": "6221c422f6ecb9d8280217bad4d55dc3405ee1c9e0f975e16e349684b4b42ef7"
+    },
+    {
+      "matches_upstream": true,
+      "snapshot_path": "src/insite_analytics/evidence_focus.py",
+      "snapshot_sha256": "5060903c1c0e36b0aecb3d75e28df1c922407b7edb8f1efd8ac256a279bb093e",
+      "upstream_path": "insite_analytics/evidence_focus.py",
+      "upstream_sha256": "5060903c1c0e36b0aecb3d75e28df1c922407b7edb8f1efd8ac256a279bb093e"
+    },
+    {
+      "matches_upstream": true,
+      "snapshot_path": "tests/test_evidence_focus.py",
+      "snapshot_sha256": "5f2b58a89de338d7992eba3c6da3e5f8a1bd134f5844f9ccd37136fe1bfb2fbd",
+      "upstream_path": "insite_analytics/tests/test_evidence_focus.py",
+      "upstream_sha256": "5f2b58a89de338d7992eba3c6da3e5f8a1bd134f5844f9ccd37136fe1bfb2fbd"
     }
   ],
   "schema": "insite-research-portfolio.source-manifest.v1",
-  "scope": "Allowlisted code snapshot and one synthetic contract test; no cloud adapters, credentials, real data, or reports.",
+  "scope": "Allowlisted code snapshot and synthetic contract tests; no cloud adapters, credentials, real data, or participant reports.",
   "source_revision": "repository working tree at portfolio assembly; hashes identify copied files"
 }
