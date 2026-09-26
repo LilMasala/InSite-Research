@@ -1,0 +1,72 @@
+{
+  "authored_glue": [
+    "demo/scenarios.py",
+    "demo/server.py",
+    "scripts/build_calibration_example.py",
+    "scripts/run_demo.py",
+    "src/insite_analytics/__init__.py",
+    "tests/test_demo_scenarios.py",
+    "tests/test_synthetic_delivery.py"
+  ],
+  "files": [
+    {
+      "matches_upstream": true,
+      "snapshot_path": "src/insite_analytics/daily_brief.py",
+      "snapshot_sha256": "9f7636ad73166f028c7fe2ac8844e20c900bbe90cac977170fde6e49b97d91b8",
+      "upstream_path": "insite_analytics/daily_brief.py",
+      "upstream_sha256": "9f7636ad73166f028c7fe2ac8844e20c900bbe90cac977170fde6e49b97d91b8"
+    },
+    {
+      "matches_upstream": true,
+      "snapshot_path": "src/insite_analytics/personal_context_engine.py",
+      "snapshot_sha256": "e6860f088828fc6b179da9e54d7e4a2ce3da3dd31800f4f4ce1291361d6d2b2f",
+      "upstream_path": "insite_analytics/personal_context_engine.py",
+      "upstream_sha256": "e6860f088828fc6b179da9e54d7e4a2ce3da3dd31800f4f4ce1291361d6d2b2f"
+    },
+    {
+      "matches_upstream": true,
+      "snapshot_path": "src/insite_analytics/numeric_search.py",
+      "snapshot_sha256": "ab4e981d20d5918bfecbfde242308c89e1cc669155eac6f8b6b96c75730dfbe4",
+      "upstream_path": "insite_analytics/numeric_search.py",
+      "upstream_sha256": "ab4e981d20d5918bfecbfde242308c89e1cc669155eac6f8b6b96c75730dfbe4"
+    },
+    {
+      "matches_upstream": true,
+      "snapshot_path": "src/insite_analytics/brief_presentation.py",
+      "snapshot_sha256": "3c304e0482a553453e31aa4c4d4e9e7259ae1be4afcccf5593d6d1ff91092fb2",
+      "upstream_path": "insite_analytics/brief_presentation.py",
+      "upstream_sha256": "3c304e0482a553453e31aa4c4d4e9e7259ae1be4afcccf5593d6d1ff91092fb2"
+    },
+    {
+      "matches_upstream": true,
+      "snapshot_path": "src/insite_analytics/personal_context_synthetic.py",
+      "snapshot_sha256": "c6c84d66350b6f4c992e86d56ff865dfbeaaa9ff75075738b64e3b22db39c289",
+      "upstream_path": "insite_analytics/personal_context_synthetic.py",
+      "upstream_sha256": "c6c84d66350b6f4c992e86d56ff865dfbeaaa9ff75075738b64e3b22db39c289"
+    },
+    {
+      "matches_upstream": true,
+      "snapshot_path": "src/insite_analytics/twin_inputs.py",
+      "snapshot_sha256": "e9a0461a0653240ccf96bee952f6e3a413a1e219afd746485a41384df22d29eb",
+      "upstream_path": "insite_analytics/twin_inputs.py",
+      "upstream_sha256": "e9a0461a0653240ccf96bee952f6e3a413a1e219afd746485a41384df22d29eb"
+    },
+    {
+      "matches_upstream": true,
+      "snapshot_path": "src/insite_analytics/observation.py",
+      "snapshot_sha256": "1c947698d5b2e4e8383cb542f91544d097b737b90c1f17763777427d8ba86b94",
+      "upstream_path": "insite_analytics/observation.py",
+      "upstream_sha256": "1c947698d5b2e4e8383cb542f91544d097b737b90c1f17763777427d8ba86b94"
+    },
+    {
+      "matches_upstream": true,
+      "snapshot_path": "tests/test_response_outcome_context.py",
+      "snapshot_sha256": "6221c422f6ecb9d8280217bad4d55dc3405ee1c9e0f975e16e349684b4b42ef7",
+      "upstream_path": "insite_analytics/tests/test_response_outcome_context.py",
+      "upstream_sha256": "6221c422f6ecb9d8280217bad4d55dc3405ee1c9e0f975e16e349684b4b42ef7"
+    }
+  ],
+  "schema": "insite-research-portfolio.source-manifest.v1",
+  "scope": "Allowlisted code snapshot and one synthetic contract test; no cloud adapters, credentials, real data, or reports.",
+  "source_revision": "repository working tree at portfolio assembly; hashes identify copied files"
+}

@@ -1,0 +1,91 @@
+{
+  "date": "2026-09-26",
+  "data_scope": "Synthetic and published virtual-patient inputs only",
+  "environment": {
+    "python": "3.11.10",
+    "dependencies": {
+      "numpy": "1.26.4",
+      "pandas": "3.0.2",
+      "torch": "2.11.0",
+      "scipy": "1.17.1",
+      "simglucose": "0.2.11",
+      "pysubgroup": "0.9.0",
+      "pytest": "9.0.2"
+    }
+  },
+  "environment_note": "Used an existing Python 3.11 environment. A fresh dependency installation was not exercised.",
+  "checks": [
+    {
+      "command": "python -m pytest tests -q",
+      "result": "5 passed",
+      "executor": "primary rerun with portfolio-local pytest configuration",
+      "seconds": 1.36
+    },
+    {
+      "command": "python scripts/run_demo.py quick",
+      "result": "ready; 3959 synthetic records accepted, 2 evidence objects",
+      "executor": "packaging worker"
+    },
+    {
+      "command": "PYTHONPATH=src:twin TWIN_COMPILE=0 python -m pytest twin/tests/test_twin.py -q -k 'torch_ode_matches or scheduled_basal_never or delivered_zero_is_observed or fit_runs_and_serialises or more_insulin_lowers'",
+      "result": "5 passed, 29 deselected; 5 upstream deprecation warnings",
+      "seconds": 34.63,
+      "executor": "primary"
+    },
+    {
+      "check": "Imports resolve inside snapshot src/ and twin/",
+      "result": "passed",
+      "executor": "primary"
+    },
+    {
+      "command": "python scripts/twin_numerical_check.py",
+      "result": "max absolute difference 1.335709 mg/dL; pooled RMSE 0.529603 mg/dL",
+      "scope": "two published virtual subjects, six hours, matched synthetic inputs"
+    },
+    {
+      "check": "Sandbox default equality, increased meal/bolus response directions, rejected invalid fields/ranges/nonfinite values",
+      "result": "passed"
+    },
+    {
+      "check": "Sandbox browser interaction: adjusted bolus slider and compared curves",
+      "result": "updated graph and metrics inspected; viewport screenshot saved"
+    },
+    {
+      "command": "python scripts/check_portfolio.py",
+      "result": "26 source hashes matched; no detected boundary or local-link failures"
+    },
+    {
+      "command": "TWIN_COMPILE=0 OMP_NUM_THREADS=1 python -m pytest tests -q",
+      "result": "28 passed after final scenario integration",
+      "executor": "primary",
+      "scope": "5 pattern contracts, 21 scenario checks, 2 delivery-export regressions"
+    },
+    {
+      "check": "Full-context UI: shorter sleep and cycle-day scenario updated 24-hour curves, metrics, and input provenance",
+      "result": "passed with synthetic inputs"
+    },
+    {
+      "command": "python scripts/build_calibration_example.py",
+      "result": "completed; 4 fit-loss days plus one initialization day; final day held out; 288 scored points; RMSE 24.26 -> 17.58 mg/dL",
+      "fit_seconds": 191.91,
+      "scope": "one fixed-seed synthetic case, 30 MAP + 30 SVI iterations",
+      "executor": "packaging worker; source/provenance and browser results reviewed by primary"
+    },
+    {
+      "check": "Calibration UI rendered stored curves, exact RMSE and split/conditioning metadata",
+      "result": "passed; screenshot saved"
+    },
+    {
+      "check": "Synthetic basal export preserves continuous delivered intervals across midnight; deleting actual-delivery events preserves missingness",
+      "result": "2 tests passed in both snapshot and original library"
+    }
+  ],
+  "not_rerun": [
+    "full 120-day pattern search",
+    "multi-person full synthetic recovery benchmark",
+    "participant or research-data benchmarks",
+    "fresh-environment dependency installation"
+  ],
+  "release_state": "Private GitHub review repository; public visibility and public hosting pending review",
+  "github_review_repository": "https://github.com/LilMasala/InSite-Research"
+}

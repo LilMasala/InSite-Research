@@ -1,0 +1,11 @@
+{
+  "syntheticOnly": true,
+  "scope": "numerical solver agreement under matched virtual inputs",
+  "virtualSubjects": 2,
+  "durationHours": 6,
+  "stepMinutes": 2,
+  "maximumAbsoluteDifferenceMgDl": 1.3357087156895204,
+  "rmseDifferenceMgDl": 0.5296033953898031,
+  "acceptanceMaximumDifferenceMgDl": 2.0,
+  "interpretation": "Numerical implementation check. Real-person forecast and intervention validity require separate evaluation."
+}

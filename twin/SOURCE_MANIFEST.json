@@ -1,0 +1,92 @@
+[
+  {
+    "source": "t1d-twin/t1d_twin/__init__.py",
+    "snapshot": "twin/t1d_twin/__init__.py",
+    "sha256": "89fd1c1ee39e8a8993dccf343a0c1523d3b6453b2572ee2152abfb4f9d7e39ac"
+  },
+  {
+    "source": "t1d-twin/t1d_twin/context.py",
+    "snapshot": "twin/t1d_twin/context.py",
+    "sha256": "dc8493d3744941ba843500d8c40da5c8664b2e6b3e130f5eb933b55455649604"
+  },
+  {
+    "source": "t1d-twin/t1d_twin/data.py",
+    "snapshot": "twin/t1d_twin/data.py",
+    "sha256": "c9e9e9f4ddc584967fdfc74ac09aa08c612bb3d9e1f40670f14d50d7aff4d4a4"
+  },
+  {
+    "source": "t1d-twin/t1d_twin/dosing.py",
+    "snapshot": "twin/t1d_twin/dosing.py",
+    "sha256": "40fe358a1f9c2e2187a71b29d64240d4b7917ae3133d1c38a684a887306d682e"
+  },
+  {
+    "source": "t1d-twin/t1d_twin/experiment.py",
+    "snapshot": "twin/t1d_twin/experiment.py",
+    "sha256": "d79e8a8d4cea139317a748d5075e9bfbb494900c811cf6cf9caa7453293a1f13"
+  },
+  {
+    "source": "t1d-twin/t1d_twin/fit.py",
+    "snapshot": "twin/t1d_twin/fit.py",
+    "sha256": "ad30e33d51c4f796c52e3d8718ee23178c60a19823f4d1bf0928d957cce66374"
+  },
+  {
+    "source": "t1d-twin/t1d_twin/forecast.py",
+    "snapshot": "twin/t1d_twin/forecast.py",
+    "sha256": "b9b6c1238cbbf60fa19d7fc7ea072c1064bc8e2085ce1c005779b46d43164d70"
+  },
+  {
+    "source": "t1d-twin/t1d_twin/model.py",
+    "snapshot": "twin/t1d_twin/model.py",
+    "sha256": "f8714ebb7398a491c21a0bb1a733fa0d34b044da5fbfde996fe3eb51853f6841"
+  },
+  {
+    "source": "t1d-twin/t1d_twin/ode.py",
+    "snapshot": "twin/t1d_twin/ode.py",
+    "sha256": "732ce9b2c5aa348a641a9f8bebba73b336a60fa80e5c86e450eadf5b9ab90e3c"
+  },
+  {
+    "source": "t1d-twin/t1d_twin/params.py",
+    "snapshot": "twin/t1d_twin/params.py",
+    "sha256": "c0c29744f5b49ad1b0acb5cfa2dcf1580ae56579174fa6995399402e289df167"
+  },
+  {
+    "source": "t1d-twin/t1d_twin/population.py",
+    "snapshot": "twin/t1d_twin/population.py",
+    "sha256": "b2fc567e6f9aad39fa7d23b6da5088b324131ebeb42f105e91a7b361ce9c0a32"
+  },
+  {
+    "source": "t1d-twin/t1d_twin/synthetic.py",
+    "snapshot": "twin/t1d_twin/synthetic.py",
+    "sha256": "0d914887d68329a2e1f44c4fea9c17e211aaf38a536ba7d9e8371c4308ba4b5c"
+  },
+  {
+    "source": "t1d-twin/t1d_twin/validate.py",
+    "snapshot": "twin/t1d_twin/validate.py",
+    "sha256": "0ad15b3e4194da8f044859b53abcb2e462063d766c5e71e7e2f60e956be537dc"
+  },
+  {
+    "source": "t1d-twin/t1d_twin/vpatients.py",
+    "snapshot": "twin/t1d_twin/vpatients.py",
+    "sha256": "3578ebced0788ee78ff877506cd390eda91a3bef7e17eb8b6716aa5ce2e16333"
+  },
+  {
+    "source": "t1d-twin/scripts/twin_recovery.py",
+    "snapshot": "twin/scripts/twin_recovery.py",
+    "sha256": "a25109264aa5159a165c429b6186464d6d542c012701984f639a1cd51f7a3e10"
+  },
+  {
+    "source": "t1d-twin/tests/test_twin.py",
+    "snapshot": "twin/tests/test_twin.py",
+    "sha256": "fdabb5c1670df85ac9dbcac8b11e0c57037232be8aa11fc88c3fab03355e3a44"
+  },
+  {
+    "source": "t1d-twin/requirements.txt",
+    "snapshot": "twin/requirements.txt",
+    "sha256": "b3531d74d9c6fa61a40543596fe332ae3fbae62d05aa1eda55d2b203e220f2a1"
+  },
+  {
+    "source": "t1d-twin/LICENSE",
+    "snapshot": "twin/LICENSE",
+    "sha256": "fd14ac9e14f9da26ba3bad91dc5bb1bdad15ba7001fae2fb9b32e72f3248957f"
+  }
+]
