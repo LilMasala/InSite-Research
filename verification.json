@@ -95,6 +95,16 @@
     {
       "command": "python scripts/plot_twin_benchmark.py",
       "result": "Rendered comparison figure from checked-in aggregate-only summary; visual review passed"
+    },
+    {
+      "check": "Recorded local-time chart coordinates and labels",
+      "result": "8 Foundation-only Swift assertions passed: midnight/day labels, distinct episode start times, time zones, spring/fall daylight-saving transitions; incremental iOS simulator build passed",
+      "scope": "Synthetic timestamps; app source maintained outside portfolio"
+    },
+    {
+      "check": "Updated twin demo validation and scenario presentation",
+      "result": "Local browser verified the shorter-sleep preset, computed metric differences and lunch/bolus markers; stored calibration and aggregate benchmark rendered correctly. Activity preset code reviewed; browser click verification was inconclusive.",
+      "scope": "Synthetic simulations and previously verified cohort-level benchmark aggregates"
     }
   ],
   "not_rerun": [

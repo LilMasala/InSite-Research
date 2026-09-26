@@ -8,6 +8,27 @@ Fitting first finds a maximum-a-posteriori starting point, then estimates a post
 
 The code treats missing delivery differently from an observed zero. Days without enough insulin-delivery information can be skipped instead of filled from a scheduled basal value. The timeline also handles irregular day lengths and multiple input cadences ([data handling](../twin/t1d_twin/data.py), [tests](../twin/tests/test_twin.py)).
 
+## From records to a personal model
+
+```mermaid
+flowchart LR
+    A[CGM and recorded inputs] --> B[Time-aligned days]
+    B --> C[Earlier fitting days]
+    B --> D[Later evaluation days]
+    C --> E[MAP initialization]
+    E --> F[Variational parameter posterior]
+    F --> G[Replay with recorded inputs]
+    D --> G
+    G --> H[Compare with held-out glucose]
+```
+
+| Part | What it represents | Where to inspect it |
+| --- | --- | --- |
+| Core physiology | Glucose production, insulin sensitivity and action, insulin and meal absorption | [Parameters](../twin/t1d_twin/params.py) |
+| Context | Sleep, activity, cycle, site age, stress, and time-of-day effects | [Input-to-mechanism map](twin-capabilities.md) |
+| Fitting | Shared physiology, day/event variation, and uncertainty from earlier records | [Fitter](../twin/t1d_twin/fit.py) |
+| Evaluation | Glucose replay error and sustained low-event discrimination on reserved windows | [Benchmark protocol](twin-benchmark.md) |
+
 ## Interactive model and calibration
 
 The [interactive demo](../demo/README.md) uses the full context and physiology rollout over a preceding day and the displayed 24 hours. Its controls expose sleep, exercise, cycle day, site age, stress, lunch inputs, and selected core physiological multipliers. The [capability table](twin-capabilities.md) maps each recorded input to its model mechanism.

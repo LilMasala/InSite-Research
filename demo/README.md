@@ -17,6 +17,8 @@ Open **http://127.0.0.1:8874**. Stop the server with Ctrl-C.
 
 ## Controls
 
+Three example buttons set a shorter night, evening exercise, or a five-day-old site and run a comparison. All inputs remain editable. The graph marks lunch, bolus timing, and activity; metrics include the difference from the reference.
+
 | Group | Inputs | Model path |
 | --- | --- | --- |
 | Daily context | Sleep duration, exercise duration and start time, cycle day, site age, stress | Existing context features and sensitivity, glucose-production, and glucose-uptake multipliers |
@@ -26,6 +28,12 @@ Open **http://127.0.0.1:8874**. Stop the server with Ctrl-C.
 The two base profiles are published virtual adults supplied by simglucose. They differ in body mass, steady-state basal input, glucose production, insulin response, and absorption parameters. The scenario metadata exposes the model values used in each run.
 
 Interactive comparisons use prior context coefficients from the included library. The model's cycle mapping uses a fixed 28-day representation; its site-age and stress terms are effective model parameters. [The capability table](../docs/twin-capabilities.md) explains each input's meaning and limitations.
+
+## Validation
+
+The Validation section reads the checked-in cohort-level benchmark summary, shows the fitting/replay procedure, and displays the HUPA-UCM and T1D-UOM results. The comparison table, figure, and uncertainty details use the same saved aggregates as the [benchmark documentation](../docs/twin-benchmark.md).
+
+![Validation view](../assets/twin-validation.png)
 
 ## Calibration example
 

@@ -32,6 +32,14 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(raw)
 
     def do_GET(self):
+        public_assets = {
+            "/benchmark": (ROOT / "examples/twin-benchmark-summary.json", "application/json; charset=utf-8"),
+            "/benchmark-figure.png": (ROOT / "assets/twin-benchmark.png", "image/png"),
+        }
+        if self.path in public_assets:
+            path, content_type = public_assets[self.path]
+            self.send(200, path.read_bytes(), content_type)
+            return
         if self.path in ("/", "/index.html"):
             self.send(200, (Path(__file__).parent / "index.html").read_bytes(), "text/html; charset=utf-8")
             return

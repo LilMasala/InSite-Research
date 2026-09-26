@@ -10,7 +10,7 @@ This file defines the first public snapshot. Each included part should help a re
 | `src/insite_analytics/` | Inspect and run the selected pattern engine | Source snapshot with hashes |
 | `tests/` | Specific pattern contracts and package checks | Synthetic fixtures |
 | `twin/` | Fitting/model code, synthetic checks, recovery script | Existing Apache 2.0 license retained |
-| `demo/` | Full-context physiological simulation and synthetic calibration viewer | Prior-coefficient scenarios, actual synthetic fitting output, localhost server |
+| `demo/` | Full-context simulation, benchmark dashboard, and synthetic calibration viewer | Prior-coefficient scenarios, actual synthetic fitting output, localhost server |
 | `docs/` | Methods, evaluation design, data access, claims audit | Aggregate/source-backed documentation |
 | Requirements, source manifests, verification record | Reproduce the reviewed state | Portable paths and recorded commands |
 

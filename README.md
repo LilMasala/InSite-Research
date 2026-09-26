@@ -58,7 +58,7 @@ The paired AUROC advantage was **+0.142 [0.058, 0.222]** over T1DSim_AI and **+0
 
 ![InSite digital-twin interface](assets/virtual-sandbox.png)
 
-Change daily context, lunch inputs, or physiological parameters and compare a continuous 24-hour glucose trajectory with a reference scenario. The interactive controls use the model's prior coefficients. A separate synthetic calibration example shows the fitting and held-out replay path.
+Try a shorter night, evening activity, or an older infusion site, then explore the individual inputs. The plot marks lunch, bolus timing, and exercise; outcome cards show each scenario’s difference from the reference over 24 hours. The interactive controls use the model's prior coefficients. A separate synthetic calibration example shows the fitting and held-out replay path.
 
 ```bash
 python -m venv .venv
@@ -67,7 +67,7 @@ pip install -r requirements.txt -r twin/requirements.txt
 python demo/server.py --port 8874
 ```
 
-Open **http://127.0.0.1:8874**. [Demo details](demo/README.md).
+Open **http://127.0.0.1:8874**. The **Validation** section walks through the benchmark and its saved results; **Fitting** shows the synthetic train/evaluation split and glucose curves. [Demo details](demo/README.md).
 
 ### Synthetic calibration
 

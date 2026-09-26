@@ -17,7 +17,7 @@ For the current participant-review workflow, authorized records are read securel
 
 # Screenshot provenance
 
-The brief, evidence, and individual-day images in `assets/` were captured from the isolated simulator on September 26, 2026. The underlying artificial history was generated with seed 131 and spans 120 days. The visible sentence comes from an actual offline Qwen3-4B-Instruct-2507-4bit wording pass over validated engine facts. Clock formatting and links are checked against those facts.
+The brief, evidence, and individual-day images in `assets/` were captured from the isolated simulator on September 26, 2026. The underlying artificial history was generated with seed 131 and spans 120 days. The visible sentence comes from an actual offline Qwen3-4B-Instruct-2507-4bit wording pass over validated engine facts. Clock formatting and links are checked against those facts. Overview and individual-day traces use recorded local clock time, with next-day labels across midnight. Missing-reading and daylight-saving clock gaps split the traces.
 
 The native app source, signing configuration, service credentials, participant reports, and simulator app bundle are maintained outside this portfolio snapshot.
 
